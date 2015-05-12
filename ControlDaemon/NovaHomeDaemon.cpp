@@ -94,10 +94,10 @@ int main(int argc, char** argv) {
 	string lights_off_ambient_off;
 	////*******************************************Loading Configurtion File******************************************///
 	bool day_time=false;                
-	printf("Loading configuration file ''hub.cfg'' ... \n");
+	printf("Loading configuration file ''NovaHomeDaemon.cfg'' ... \n");
 	Config cfg;
 	try {
-		cfg.readFile("hub.cfg");
+		cfg.readFile("NovaHomeDaemon.cfg");
 	}  catch(const FileIOException &fioex) {
 		std::cerr << "I/O error while reading file." << std::endl;
 		return(EXIT_FAILURE);
