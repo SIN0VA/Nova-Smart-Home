@@ -3,5 +3,5 @@ I am gonna put here the code of my final year project, which is a Smart Home bas
 I will write the whole documentation once I finish writing my thesis, everything works except the HMAC check (gotta fix it).
 # Getting Started
 Just to introduce the workings of this project a little bit, there are two programs ; a Node.JS app  which is an Express Web Server so people can turn off/on lights and things like that.If you're familiar with NodeJS Express check the two main files of the server [the ExpressJS Routes file](HomeControlServer/routes/index.js) and [the ExpressJS App file](HomeControlServer/app.js).
-The second app is a Control Daemon coded with C++, this one controls and handle the requests from the NodeJS WebServer (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.
+The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handle the requests from the NodeJS WebServer (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.
 I am gonna upload the Arduino Shields that I designed at a later time.
