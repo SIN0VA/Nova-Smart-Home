@@ -8,7 +8,6 @@
   #include <SPI.h>
   #include <math.h>
   #include <AES.h>
-  #include <Entropy.h>
   #include <stdint.h>
   #include <sha1.h>
   #include <elapsedMillis.h>
