@@ -257,24 +257,24 @@ int main(int argc, char** argv) {
 
 	int i=0;
 	while (1) {
-		////////////////////////////////////Checking the time for day and night lights control/////////////////////////////////
+		////////////////////////////////////Checking the time for day and night for lights control/////////////////////////////////
 		if(day_saving==true) {
 		day_time=checkoffTime(lights_off_ambient_on,lights_evening);
 		usleep(10);}
-		/////////////////////////////////Sending Temprature to Web Server////////////////////////////////////////
+		/////////////////////////////////Sending Temprature and Humidity to Web Server if requested ////////////////////////////////////////
 		message_t message1;
 		int error1=responder.recv(&message1,ZMQ_NOBLOCK);
 		if(error1!=0&&error1!=-1) {
-		cout<<"Received temperature request from server ...";
-        usleep (2);
-        string json="{\"temp\":"+ to_string(round(current_tem)) +",\"humid\":"+ to_string(round(current_hum)) +"}";
-        message_t reply(json.length());
-        memcpy ((void *) reply.data (), json.c_str(), json.length());
-        responder.send (reply);
-        cout<<"reply sent ."<<endl;
+		 cout<<"Received temperature request from server ...";
+		 usleep (2);
+      		 string json="{\"temp\":"+ to_string(round(current_tem)) +",\"humid\":"+ to_string(round(current_hum)) +"}";
+		 message_t reply(json.length());
+		 memcpy ((void *) reply.data (), json.c_str(), json.length());
+         	 responder.send (reply);
+		 cout<<"reply sent ."<<endl;
 		}
-		////////////////////////////////////////ZMQ Listener ,Looking for Home Control Server Events /////////////////////////////////
-		usleep(200);
+		////////////////////////////////////////ZMQ Listener ,Looking for Web Server Light Events  /////////////////////////////////
+		usleep(100);
 		network.update();
 		message_t message;
 		int error=socket.recv(&message,ZMQ_NOBLOCK);
@@ -310,7 +310,7 @@ int main(int argc, char** argv) {
 		rf_paquet rfpaquet2 ;
 
 		/////////////////////////////////////////RF Paquets Control
-		if (network.available()) {
+		if (network.available()) {        //do we have a recieved RF packet ?
 			RF24NetworkHeader header;
 			network.read(header, &rfpaquet2, sizeof(rfpaquet2));
 			//Sha1.initHmac(hmacKey1, 64);
@@ -321,6 +321,7 @@ int main(int argc, char** argv) {
 			cout<<"Recieved Aespaquet in hex : "<<endl ;
 			printHash((byte*)&rfpaquet2.aespaquet,24);
 			cout<<"Recieved packet in hex : "<<endl ;
+			//HMAC 
 			printHash((byte*)&rfpaquet2,44);
 			Sha1.initHmac(hmacKey1,64);
 			Sha1.print((const char*)&(rfpaquet2.aespaquet));
@@ -331,7 +332,7 @@ int main(int argc, char** argv) {
 			cout<<"Pack HMAC in hex : "<<endl ;
 			printHash((byte*)rfpaquet2.hmac_tag,20);
 			//if (strncmp ((const char *)hmac_tag,(const char *)rfpaquet2.hmac_tag,20) == 0) { // Test HMAC
-			if (true) { // Bypassing HMAC verification, will test only encryption
+			if (true) { // Bypassing HMAC verification, for now only encryption works
 				long int i_v = rfpaquet2.aespaquet.i_v;
 				cout <<"IV : ";
 				cout<<i_v<<endl;
@@ -353,8 +354,9 @@ int main(int argc, char** argv) {
 				cout <<"Encrypted  bytes : ";
 				printHash(rfpaquet2.aespaquet.enc_data,sizeof(rfpaquet2.aespaquet.enc_data));
 				if (rfpaquet2.aespaquet.paquet_type=='S') {
+					//// Reading temp, humid, and gaz levels.
 					sensor_data dec_data;
-					memcpy(&dec_data, dec_bytes2, sizeof(sensor_data));    //If messed up output change sizeof(sensor_data) to sizeof(dec_bytes2)
+					memcpy(&dec_data, dec_bytes2, sizeof(sensor_data));    
 					cout <<"Decrypted bytes : ";
 					printHash((byte*)&dec_data,sizeof(dec_data));
 					current_tem=dec_data.tem;
@@ -363,7 +365,7 @@ int main(int argc, char** argv) {
 					cout<<"Humidity  : "<<to_string(dec_data.hum)<<"%" <<endl;
 					current_gas=dec_data.gas;
 					cout<<"Gas levels : "<<to_string(dec_data.gas)<<"ppm" <<endl;
-					if (dec_data.gas>cGas) {//SMS Notification
+					if (dec_data.gas>cGas) {                             //Send SMS Warning to all the phones listed in the config file if there is fire, somke, or a flammable gas.
 						cout << "WARNING !! Possible smoke or gas leak in the house !" <<endl;
 						for (int i=0;i<number_of_phones;i++){
 							string sms_alert="echo \"Warning ! Possible Fire or Gas Leak . Attention ! Possibilite d'incendie ou fuite de gas ! - Test SmartHome  A.B. PFE 2015 ! Je vous remercie  ! "
@@ -396,8 +398,8 @@ int main(int argc, char** argv) {
 							cout<<"Air Conditioner shutting down ."<<endl; //send the message A/C and Fan shutdown
 							ac=false;
 							send_t=true;
-						}  /////////////////////////Thermostat Control //////////////
-					} else {
+						}  /////////////////////////Thermostat Control ,//////////////
+					} else {  // This is a simple algorithm, it needs improvement or customization 
 						if (dec_data.tem < maintained_temp-temp_h && heater == false) {
 							cout << "Heater Activated ." << endl;
 							heater = true;
@@ -418,7 +420,7 @@ int main(int argc, char** argv) {
 					}
 					send_rfcommand('T', heater, ac, send_t,5000,thermostat_addr,key,bits,hmacKey1,network);
 					usleep(10);
-				} else if (rfpaquet2.aespaquet.paquet_type == 'P' && auto_light==true && day_time==false) {
+				} else if (rfpaquet2.aespaquet.paquet_type == 'P' && auto_light==true && day_time==false) {   //if it's a PIR packet, find the address of the LightSwitch from the pairs vector 
 					bool send=true;
 					unsigned int addrr;
 					memcpy(&addrr,dec_bytes2,2);
@@ -434,8 +436,8 @@ int main(int argc, char** argv) {
 			else cout<<"Wrong HMAC . Packet Dropped  ! " << endl;
 		}
 		usleep(1);
-		//////////////////////////////////////////////////////////GSM Call Listener /////////////////
-		//fprintf(stderr, _("Waiting for a call.\n"));
+		//////////////////////////////////////////////////////////GSM Call Listener ///////////////// For Call2Report fucntion
+		//I haven't tested this yet, I need a USB GSM Modem that supports voice call, mine support only Data and SMS 
 
 		if (call2report) {
 			businit();
@@ -462,7 +464,7 @@ int main(int argc, char** argv) {
 	}
 	return 0;
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 static void businit(void) {
 	if (GN_ERR_NONE != gn_lib_phoneprofile_load(NULL, &state))
 		exit(2);
