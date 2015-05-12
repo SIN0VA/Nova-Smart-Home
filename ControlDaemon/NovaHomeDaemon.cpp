@@ -92,8 +92,8 @@ int main(int argc, char** argv) {
 	string city;
 	string lights_evening;
 	string lights_off_ambient_off;
-	////////////////////////////////////////////////////////////////////
-	bool day_time=false;                //turn off all lights for late time, and activating ambient lights
+	////*******************************************Loading Configurtion File******************************************///
+	bool day_time=false;                
 	printf("Loading configuration file ''hub.cfg'' ... \n");
 	Config cfg;
 	try {
