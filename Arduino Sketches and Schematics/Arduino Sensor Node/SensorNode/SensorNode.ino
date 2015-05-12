@@ -59,7 +59,7 @@ void loop() {
 
   
   //  Serial.println(millis()-timer);
-  if (millis()-timer>60000)  { // Delay of one minute so the MQ2 gets heated up .
+  if (millis()-timer>60000)  { // Delay of one minute so the MQ2 heats up and give accurate readings .
       Serial.println("**********************************************************");
     float gas=0; for(int i=0;i<10;i++) {
       gas = gas + analogRead(MQ2_PIN);
@@ -118,8 +118,8 @@ void loop() {
   
   network.update();
   RF24NetworkHeader header( hub_addr);
-  bool ok=network.write(header,&rfpaquet,sizeof(rfpaquet));    
-  delay(2000);
+  bool ok=network.write(header,&rfpaquet,sizeof(rfpaquet));   // Sending the Sensor Node RF packet
+  delay(2000);                                                // Send every 2 seconds
    }
 }
 
