@@ -1,3 +1,7 @@
+//***************************************************************//
+//********************Main Control Daemon************************//
+//**********************S!NOVA 2015******************************//
+//***************************************************************//
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -103,11 +107,11 @@ int main(int argc, char** argv) {
 		return(EXIT_FAILURE); }
 	Setting &root = cfg.getRoot();
 	unsigned int ctemp_l = cfg.lookup("ctemp_l");
-	cout<<"Critical Lowest Temperature set to : " << ctemp_l << " 캜 "<< endl;
+	cout<<"Critical Lowest Temperature set to : " << ctemp_l << " 째C "<< endl;
 	unsigned int ctemp_h = cfg.lookup("ctemp_h");
-	cout<<"Critical Highest Temperature set to : " << ctemp_h << " 캜 "<< endl;
+	cout<<"Critical Highest Temperature set to : " << ctemp_h << " 째C "<< endl;
 	unsigned int temp_h = cfg.lookup("temp_h");
-	cout<<"Hysteresis  Temperature set to : " << temp_h << " 캜 "<< endl;
+	cout<<"Hysteresis  Temperature set to : " << temp_h << " 째C "<< endl;
 	unsigned int cGas = cfg.lookup("cgas");
 	cout<<"Critical Gas level set to : " << cGas <<" ppm "<< endl;
 	unsigned int cHumid = cfg.lookup("chumid");           //Critical Humidty
@@ -224,7 +228,7 @@ int main(int argc, char** argv) {
 		lights_evening = string(date2);
 		cout<<"Turning on the main lights (Evening) at  : " << lights_evening << endl;
 		out_temp = document2["main"]["temp"].GetDouble();
-		cout << "Temperature outside the House : " << out_temp << "C�" << endl ;
+		cout << "Temperature outside the House : " << out_temp << "C째" << endl ;
 		out_humid = document2["main"]["humidity"].GetDouble();
 		cout << "Humidity outside the House : " << out_humid << "%" << endl ;
 	}
@@ -354,7 +358,7 @@ int main(int argc, char** argv) {
 					cout <<"Decrypted bytes : ";
 					printHash((byte*)&dec_data,sizeof(dec_data));
 					current_tem=dec_data.tem;
-					cout<<"Temperature : "<<to_string(dec_data.tem)<<"C�" <<endl;
+					cout<<"Temperature : "<<to_string(dec_data.tem)<<"C째" <<endl;
 					current_hum=dec_data.hum;
 					cout<<"Humidity  : "<<to_string(dec_data.hum)<<"%" <<endl;
 					current_gas=dec_data.gas;
