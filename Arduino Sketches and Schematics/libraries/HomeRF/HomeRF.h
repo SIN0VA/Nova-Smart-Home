@@ -17,7 +17,7 @@ const float IN_EXTRA_CAP_TO_GND = 0.0;
 const float IN_CAP_TO_GND  = IN_STRAY_CAP_TO_GND + IN_EXTRA_CAP_TO_GND;
 const int MAX_ADC_VALUE = 1023;
 ///////***************************************************************************************
-//float  temp_c();
+float  temp_c();
 float capacitance ();
 void printHash(byte * ,int );
 void PrintHex8(uint8_t *data, uint8_t length);
