@@ -1,12 +1,11 @@
-#include "HomeRF.h"
-#include <stdio.h>
-#include <iostream>
-#include <stdint.h>
 //////******************************************************
 //////****************** HomeRF - S!NOVA ******************
 //////****************** Home Automation *******************
 //////******************************************************
-
+#include "HomeRF.h"
+#include <stdio.h>
+#include <iostream>
+#include <stdint.h>
 
 
 float capacitance (){  
