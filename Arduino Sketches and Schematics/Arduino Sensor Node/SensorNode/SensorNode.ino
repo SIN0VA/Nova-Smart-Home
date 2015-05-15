@@ -49,11 +49,7 @@ void setup(void)
   //Serial.println("Sensor Node Started ...");
 }
 int long timer=millis();
-float  temp_c() {
-  int voltemp= analogRead(TEMP_PIN)-80;
-  float millivolts= (voltemp/1023.0) * 5000;
-  return  millivolts/10 - 273.15  ;
-}
+
 
 void loop() {
 
