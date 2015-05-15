@@ -29,22 +29,4 @@ void printHash(unsigned char * hash,int j) {            //uint8_t
 
 
 
-void PrintHex8(uint8_t *data, uint8_t length) // prints 8-bit data in hex
-{
-     char tmp[length*2+1];
-     byte first;
-     byte second;
-     for (int i=0; i<length; i++) {
-           first = (data[i] >> 4) & 0x0f;
-           second = data[i] & 0x0f;
-           // base for converting single digit numbers to ASCII is 48
-           // base for 10-16 to become lower-case characters a-f is 87
-           // note: difference is 39
-           tmp[i*2] = first+48;
-           tmp[i*2+1] = second+48;
-           if (first > 9) tmp[i*2] += 39;
-           if (second > 9) tmp[i*2+1] += 39;
-     }
-     tmp[length*2] = 0;
-     Serial.println(tmp);
-}
+
