@@ -166,7 +166,7 @@ int main(int argc, char** argv) {
 
 	Setting &alert_phones = root["alert_phones"];
 	int number_of_phones = alert_phones.getLength();
-	cout << "Number of phones in the emergency list , " << number_of_phones << " phones , ";
+	cout << "Number of phones in the emergency list , " << number_of_phones << " phones";
 	std::string phonesVector[number_of_phones];
 	for (int i = 0; i < number_of_phones; ++i) {
 		string phone = alert_phones[i];
@@ -176,7 +176,7 @@ int main(int argc, char** argv) {
 		//phonesVector[i]=alert_phones.lookup(alert_phones[i]);
 		cout<<", "<< phonesVector[i] ;
 	}
-	cout<<endl;
+	cout<<"."<<endl;
 	if (number_of_phones<2) cout << "It is recommended to set at least three phone numbers ." << endl ;
 	string lights_off_ambient_on = cfg.lookup("lights_off_ambient_on");
 	cout<<"Turning off the main lights ,and switching to ambient lights (Late night) at : " << lights_off_ambient_on << endl;
