@@ -166,7 +166,7 @@ int main(int argc, char** argv) {
 
 	Setting &alert_phones = root["alert_phones"];
 	int number_of_phones = alert_phones.getLength();
-	cout << "Number of phones in the emergency list , " << number_of_phones << " phones : "<< endl;
+	cout << "Number of phones in the emergency list , " << number_of_phones << " phones , ";
 	std::string phonesVector[number_of_phones];
 	for (int i = 0; i < number_of_phones; ++i) {
 		string phone = alert_phones[i];
