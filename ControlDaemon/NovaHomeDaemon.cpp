@@ -49,13 +49,13 @@ static void busterminate(void) ;
 ///////////////////////////////////////// Encryption Setup
 
 int bits = 128;
-uint8_t hmacKey1[] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,                 //HMAC-SHA-1 Key
+uint8_t hmacKey1[] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
 		0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14,
 		0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20,
 		0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2a, 0x2b, 0x2c,
 		0x2d, 0x2e, 0x2f, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
 		0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f };
-byte key[] = { 0x53, 0xDE, 0xF0, 0x33, 0x7F, 0x1E, 0x59, 0xB3, 0x0A, 0x38, 0xF4,   //AES-128 Key
+byte key[] = { 0x53, 0xDE, 0xF0, 0x33, 0x7F, 0x1E, 0x59, 0xB3, 0x0A, 0x38, 0xF4,
 		0xC0, 0x11, 0x81, 0xFE, 0x9C };
 
 //////////////////////////////////RF Setup
@@ -80,6 +80,7 @@ int main(int argc, char** argv) {
 	bool auto_light=true;
 	bool call2report=false;
 	bool day_saving=false;
+	bool geolocation=false;
 	float maintained_temp=0;  //read from node.js Home Control Server ,when thermostat activated
 	float out_temp ;
 	float out_humid;
@@ -92,8 +93,8 @@ int main(int argc, char** argv) {
 	string city;
 	string lights_evening;
 	string lights_off_ambient_off;
-	////*******************************************Loading Configurtion File******************************************///
-	bool day_time=false;                
+	////////////////////////////////////////////////////////////////////
+	bool day_time=false;                //turn off all lights for late time, and activating ambient lights
 	printf("Loading configuration file ''NovaHomeDaemon.cfg'' ... \n");
 	Config cfg;
 	try {
@@ -138,7 +139,7 @@ int main(int argc, char** argv) {
 		unsigned int light_addr;
 		pair.lookupValue("pir_addr", pir_addr);
 		pair.lookupValue("light_addr", light_addr);
-		cout << pir_addr << "  " << light_addr <<endl;
+		cout << "PIR Address : " <<pir_addr << " ; Light Switch Address : " << light_addr <<endl;
 		if ((2*i)%2==0){
 			pair.lookupValue("pir_addr", pairsVector[2*i]);
 			pair.lookupValue("light_addr", pairsVector[2*i+1]);
@@ -171,28 +172,19 @@ int main(int argc, char** argv) {
 		string phone = alert_phones[i];
 		phonesVector[i]=phone;
 		/*phonesVector.lookupString();
-			phonesVector.lookupString();*/
+	      phonesVector.lookupString();*/
 		//phonesVector[i]=alert_phones.lookup(alert_phones[i]);
-		cout<< phonesVector[i] <<endl ;
+		cout<<", "<< phonesVector[i] ;
 	}
+	cout<<endl;
 	if (number_of_phones<2) cout << "It is recommended to set at least three phone numbers ." << endl ;
-
-
 	string lights_off_ambient_on = cfg.lookup("lights_off_ambient_on");
 	cout<<"Turning off the main lights ,and switching to ambient lights (Late night) at : " << lights_off_ambient_on << endl;
-	if(root.lookupValue("city_name", city)) {
-		cout<<"Geolocation is off ."<<endl;
-		cout<<"Location is manually configured to : "<< city<<endl;
-		root.lookupValue("lights_off_ambient_off", lights_off_ambient_off);
-		//lights_off_ambient_off =(string) cfg.lookup("lights_off_ambient_off");
-		cout<<"Turning off all lights (Morning) at  : " << lights_off_ambient_off << endl;
-		//lights_evening = (string)cfg.lookup("lights_evening");
-		root.lookupValue("lights_evening", lights_evening);
-		cout<<"Turning on the main lights (Evening) at  : " << lights_evening << endl;
-	} else {
-		//get_JSON("http://ipinfo.io/json","geo.jason");
+	geolocation = cfg.lookup("geolocation");
+	if (geolocation){
+		cout<<"The function of geolocation is enabled." << endl;
 		get_JSON("freegeoip.net/json","geo.json");
-		cout<<"Auto-Geolcoation setting is on ..."<<endl;
+		cout<<"Auto-Geolocation setting is on ..."<<endl;
 		FILE* pFile = fopen("geo.json", "rb");
 		char buffer[65536];
 		FileReadStream is(pFile, buffer, sizeof(buffer));
@@ -231,7 +223,19 @@ int main(int argc, char** argv) {
 		cout << "Temperature outside the House : " << out_temp << "C°" << endl ;
 		out_humid = document2["main"]["humidity"].GetDouble();
 		cout << "Humidity outside the House : " << out_humid << "%" << endl ;
+	} else {
+		root.lookupValue("city_name", city);
+		cout<<"The function of Geolocation is disabled" << endl;
+		cout<<"Location is manually configured to : "<< city<<endl;
+		root.lookupValue("lights_off_ambient_off", lights_off_ambient_off);
+		//lights_off_ambient_off =(string) cfg.lookup("lights_off_ambient_off");
+		cout<<"Turning off all lights (Morning) at  : " << lights_off_ambient_off << endl;
+		//lights_evening = (string)cfg.lookup("lights_evening");
+		root.lookupValue("lights_evening", lights_evening);
+		cout<<"Turning on the main lights (Evening) at  : " << lights_evening << endl;
 	}
+
+
 
 	radio.begin();
 	network.begin(/*channel*/90, /*node address*/this_node);
@@ -257,24 +261,24 @@ int main(int argc, char** argv) {
 
 	int i=0;
 	while (1) {
-		////////////////////////////////////Checking the time for day and night for lights control/////////////////////////////////
+		////////////////////////////////////Checking the time for day and night lights control/////////////////////////////////
 		if(day_saving==true) {
 		day_time=checkoffTime(lights_off_ambient_on,lights_evening);
 		usleep(10);}
-		/////////////////////////////////Sending Temprature and Humidity to Web Server if requested ////////////////////////////////////////
+		/////////////////////////////////Sending Temprature to Web Server////////////////////////////////////////
 		message_t message1;
 		int error1=responder.recv(&message1,ZMQ_NOBLOCK);
 		if(error1!=0&&error1!=-1) {
-		 cout<<"Received temperature request from server ...";
-		 usleep (2);
-      		 string json="{\"temp\":"+ to_string(round(current_tem)) +",\"humid\":"+ to_string(round(current_hum)) +"}";
-		 message_t reply(json.length());
-		 memcpy ((void *) reply.data (), json.c_str(), json.length());
-         	 responder.send (reply);
-		 cout<<"reply sent ."<<endl;
+		cout<<"Received temperature request from server ...";
+        usleep (2);
+        string json="{\"temp\":"+ to_string(round(current_tem)) +",\"humid\":"+ to_string(round(current_hum)) +"}";
+        message_t reply(json.length());
+        memcpy ((void *) reply.data (), json.c_str(), json.length());
+        responder.send (reply);
+        cout<<"reply sent ."<<endl;
 		}
-		////////////////////////////////////////ZMQ Listener ,Looking for Web Server Light Events  /////////////////////////////////
-		usleep(100);
+		////////////////////////////////////////ZMQ Listener ,Looking for Home Control Server Events /////////////////////////////////
+		usleep(200);
 		network.update();
 		message_t message;
 		int error=socket.recv(&message,ZMQ_NOBLOCK);
@@ -310,7 +314,7 @@ int main(int argc, char** argv) {
 		rf_paquet rfpaquet2 ;
 
 		/////////////////////////////////////////RF Paquets Control
-		if (network.available()) {        //do we have a recieved RF packet ?
+		if (network.available()) {
 			RF24NetworkHeader header;
 			network.read(header, &rfpaquet2, sizeof(rfpaquet2));
 			//Sha1.initHmac(hmacKey1, 64);
@@ -321,7 +325,6 @@ int main(int argc, char** argv) {
 			cout<<"Recieved Aespaquet in hex : "<<endl ;
 			printHash((byte*)&rfpaquet2.aespaquet,24);
 			cout<<"Recieved packet in hex : "<<endl ;
-			//HMAC 
 			printHash((byte*)&rfpaquet2,44);
 			Sha1.initHmac(hmacKey1,64);
 			Sha1.print((const char*)&(rfpaquet2.aespaquet));
@@ -332,7 +335,7 @@ int main(int argc, char** argv) {
 			cout<<"Pack HMAC in hex : "<<endl ;
 			printHash((byte*)rfpaquet2.hmac_tag,20);
 			//if (strncmp ((const char *)hmac_tag,(const char *)rfpaquet2.hmac_tag,20) == 0) { // Test HMAC
-			if (true) { // Bypassing HMAC verification, for now only encryption works
+			if (true) { // Bypassing HMAC verification, will test only encryption
 				long int i_v = rfpaquet2.aespaquet.i_v;
 				cout <<"IV : ";
 				cout<<i_v<<endl;
@@ -354,9 +357,8 @@ int main(int argc, char** argv) {
 				cout <<"Encrypted  bytes : ";
 				printHash(rfpaquet2.aespaquet.enc_data,sizeof(rfpaquet2.aespaquet.enc_data));
 				if (rfpaquet2.aespaquet.paquet_type=='S') {
-					//// Reading temp, humid, and gaz levels.
 					sensor_data dec_data;
-					memcpy(&dec_data, dec_bytes2, sizeof(sensor_data));    
+					memcpy(&dec_data, dec_bytes2, sizeof(sensor_data));    //If messed up output change sizeof(sensor_data) to sizeof(dec_bytes2)
 					cout <<"Decrypted bytes : ";
 					printHash((byte*)&dec_data,sizeof(dec_data));
 					current_tem=dec_data.tem;
@@ -365,7 +367,7 @@ int main(int argc, char** argv) {
 					cout<<"Humidity  : "<<to_string(dec_data.hum)<<"%" <<endl;
 					current_gas=dec_data.gas;
 					cout<<"Gas levels : "<<to_string(dec_data.gas)<<"ppm" <<endl;
-					if (dec_data.gas>cGas) {                             //Send SMS Warning to all the phones listed in the config file if there is fire, somke, or a flammable gas.
+					if (dec_data.gas>cGas) {//SMS Notification
 						cout << "WARNING !! Possible smoke or gas leak in the house !" <<endl;
 						for (int i=0;i<number_of_phones;i++){
 							string sms_alert="echo \"Warning ! Possible Fire or Gas Leak . Attention ! Possibilite d'incendie ou fuite de gas ! - Test SmartHome  A.B. PFE 2015 ! Je vous remercie  ! "
@@ -398,8 +400,8 @@ int main(int argc, char** argv) {
 							cout<<"Air Conditioner shutting down ."<<endl; //send the message A/C and Fan shutdown
 							ac=false;
 							send_t=true;
-						}  /////////////////////////Thermostat Control ,//////////////
-					} else {  // This is a simple algorithm, it needs improvement or customization 
+						}  /////////////////////////Thermostat Control //////////////
+					} else {
 						if (dec_data.tem < maintained_temp-temp_h && heater == false) {
 							cout << "Heater Activated ." << endl;
 							heater = true;
@@ -420,7 +422,7 @@ int main(int argc, char** argv) {
 					}
 					send_rfcommand('T', heater, ac, send_t,5000,thermostat_addr,key,bits,hmacKey1,network);
 					usleep(10);
-				} else if (rfpaquet2.aespaquet.paquet_type == 'P' && auto_light==true && day_time==false) {   //if it's a PIR packet, find the address of the LightSwitch from the pairs vector 
+				} else if (rfpaquet2.aespaquet.paquet_type == 'P' && auto_light==true && day_time==false) {
 					bool send=true;
 					unsigned int addrr;
 					memcpy(&addrr,dec_bytes2,2);
@@ -436,8 +438,8 @@ int main(int argc, char** argv) {
 			else cout<<"Wrong HMAC . Packet Dropped  ! " << endl;
 		}
 		usleep(1);
-		//////////////////////////////////////////////////////////GSM Call Listener ///////////////// For Call2Report fucntion
-		//I haven't tested this yet, I need a USB GSM Modem that supports voice call, mine support only Data and SMS 
+		//////////////////////////////////////////////////////////GSM Call Listener /////////////////
+		//fprintf(stderr, _("Waiting for a call.\n"));
 
 		if (call2report) {
 			businit();
@@ -464,7 +466,7 @@ int main(int argc, char** argv) {
 	}
 	return 0;
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void businit(void) {
 	if (GN_ERR_NONE != gn_lib_phoneprofile_load(NULL, &state))
 		exit(2);
