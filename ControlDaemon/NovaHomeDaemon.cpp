@@ -97,6 +97,7 @@ int main(int argc, char** argv) {
 	bool day_time=false;                //turn off all lights for late time, and activating ambient lights
 	printf("Loading configuration file ''NovaHomeDaemon.cfg'' ... \n");
 	Config cfg;
+	/////////////////////////////////////////////Loading Config Variables///////////////////////////////////////
 	try {
 		cfg.readFile("NovaHomeDaemon.cfg");
 	}  catch(const FileIOException &fioex) {
@@ -234,9 +235,9 @@ int main(int argc, char** argv) {
 		root.lookupValue("lights_evening", lights_evening);
 		cout<<"Turning on the main lights (Evening) at  : " << lights_evening << endl;
 	}
+	/////////////////////////////////////////////Loading Config Variables Ends Here///////////////////////////////////////
 
-
-
+	/////////////////////////////////////////////Start RF interface and ZMQ Sockets///////////////////////////////////////
 	radio.begin();
 	network.begin(/*channel*/90, /*node address*/this_node);
 	time_t rawtime;
@@ -260,6 +261,7 @@ int main(int argc, char** argv) {
 	responder.bind("tcp://127.0.0.104:5559");
 
 	int i=0;
+	/////////////////////////////////////////////////The Daemon Loop///////////////////////////////////////////////////////////
 	while (1) {
 		////////////////////////////////////Checking the time for day and night lights control/////////////////////////////////
 		if(day_saving==true) {
@@ -313,7 +315,7 @@ int main(int argc, char** argv) {
 		bool send_t=false;
 		rf_paquet rfpaquet2 ;
 
-		/////////////////////////////////////////RF Paquets Control
+		/////////////////////////////////////////RF Packets Control
 		if (network.available()) {
 			RF24NetworkHeader header;
 			network.read(header, &rfpaquet2, sizeof(rfpaquet2));
@@ -440,7 +442,7 @@ int main(int argc, char** argv) {
 		usleep(1);
 		//////////////////////////////////////////////////////////GSM Call Listener /////////////////
 		//fprintf(stderr, _("Waiting for a call.\n"));
-
+		////////////////////////////////////////////////Call2report Not tested, needs an USB GSM modem with Voice Call fucntion
 		if (call2report) {
 			businit();
 			gn_call_check_active(state);
