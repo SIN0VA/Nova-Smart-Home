@@ -94,6 +94,16 @@ int main(int argc, char** argv) {
 	string lights_evening;
 	string lights_off_ambient_off;
 	////////////////////////////////////////////////////////////////////
+	cout<< "                   _______________________________"<<endl;
+	cout<< "******************|+++++++++++++++++++++++++++++++|***************************"<<endl;
+	cout<< "******************|+|===========================|+|***************************"<<endl;
+	cout<< "******************|+| Smart Home Control Daemon |+|***************************"<<endl;
+	cout<< "******************|+|  Final Year Project 2015  |+|***************************"<<endl;
+	cout<< "******************|+|     By Adil Benabdallah   |+|***************************"<<endl;
+	cout<< "******************|+|      (Debug. Console)     |+|***************************"<<endl;
+	cout<< "******************|+|___________________________|+|***************************"<<endl;
+	cout<< "******************|+++++++++++++++++++++++++++++++|***************************"<<endl;
+	cout<<endl;
 	bool day_time=false;                //turn off all lights for late time, and activating ambient lights
 	printf("Loading configuration file ''NovaHomeDaemon.cfg'' ... \n");
 	Config cfg;
