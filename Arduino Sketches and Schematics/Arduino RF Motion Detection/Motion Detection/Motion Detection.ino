@@ -32,56 +32,50 @@
   const uint16_t this_node = 03;        // Address of our node in Octal format
   const uint16_t hub_addr = 00;       // Address of the other node in Octal format
   
-  /////////////////////////////////////////
-  int pir_pin = 6;
- 
+////////////////////////////////////////////////////////////////////////////////////////////////////
   
-  void setup() {    
-   pinMode(pir_pin, INPUT);
-   SPI.begin();    
-   radio.begin();
-   network.begin(/*channel*/ 90, /*node address*/ this_node);
-   Serial.begin(57600);
-   //Entropy.initialize(); 
-  }
+  void setup() {
+    pinMode(pir_pin, INPUT);
+    SPI.begin();    
+    radio.begin();
+    network.begin(/*channel*/ 90, /*node address*/ this_node);
+    Serial.begin(57600);
+    //Entropy.initialize(); 
+   }
   
   void loop() {
-  int pir=analogRead(A3);   
-  delay(1000);
+   int pir=analogRead(A3);   
    Serial.print("Pir a3 = ");Serial.println(pir);
-  if (/*digitalRead(pir_pin)==HIGH*/pir>1020) {
-    
-   
-    
+   if (/*digitalRead(pir_pin)==HIGH*/pir>1020) {
+    delay(100);
     network.update();
-      //////////////////////////////////////////////////
-  unsigned long int my_iv =TrueRandom.random();
-  pir_data plain_data ={(unsigned int)03,(unsigned int)03} ;
-  byte pir_bytes[sizeof(pir_data)];
-  memcpy(pir_bytes, &plain_data, sizeof(pir_data));
-  PrintHex8(pir_bytes,sizeof(pir_data));
-  byte iv [16] ;
-  byte cipher[16];
-  aes.set_IV(my_iv);
-  aes.get_IV(iv);
-  RF24NetworkHeader header( hub_addr);
-  aes.do_aes_encrypt(pir_bytes,sizeof(pir_bytes),cipher,key,bits,iv);
-  Sha1.initHmac(hmacKey1,64);
-  aes_paquet aespaquet ;
-  aespaquet.i_v=my_iv;
-  aespaquet.paquet_type='P';
-  memcpy(aespaquet.enc_data,cipher,sizeof(aespaquet.enc_data)); 
-  Sha1.print((const char*)&aespaquet);
-  uint8_t *hmactag = Sha1.resultHmac();
- rf_paquet rfpaquet ;
- rfpaquet.aespaquet = aespaquet;
- memcpy(&rfpaquet.hmac_tag,hmactag,sizeof(rfpaquet.hmac_tag));
- 
- bool ok=network.write(header,&rfpaquet,sizeof(rfpaquet));    
- if (ok) Serial.println("ok.");
- else Serial.println("failed.");
- network.update();
-      /////////////////////////////////////////////            
-    }
+    //////////////////////////////////////////////////
+    unsigned long int my_iv =TrueRandom.random();
+    pir_data plain_data ={(unsigned int)03,(unsigned int)03} ;
+    byte pir_bytes[sizeof(pir_data)];
+    memcpy(pir_bytes, &plain_data, sizeof(pir_data));
+    PrintHex8(pir_bytes,sizeof(pir_data));
+    byte iv [16] ;
+    byte cipher[16];
+    aes.set_IV(my_iv);
+    aes.get_IV(iv);
+    RF24NetworkHeader header( hub_addr);
+    aes.do_aes_encrypt(pir_bytes,sizeof(pir_bytes),cipher,key,bits,iv);
+    Sha1.initHmac(hmacKey1,64);
+    aes_paquet aespaquet ;
+    aespaquet.i_v=my_iv;
+    aespaquet.paquet_type='P';
+    memcpy(aespaquet.enc_data,cipher,sizeof(aespaquet.enc_data)); 
+    Sha1.print((const char*)&aespaquet);
+    uint8_t *hmactag = Sha1.resultHmac();
+    rf_paquet rfpaquet ;
+    rfpaquet.aespaquet = aespaquet;
+    memcpy(&rfpaquet.hmac_tag,hmactag,sizeof(rfpaquet.hmac_tag));
+    bool ok=network.write(header,&rfpaquet,sizeof(rfpaquet));    
+    if (ok) Serial.println("ok.");
+    else Serial.println("failed.");
+    network.update();
+    /////////////////////////////////////////////            
+   }
   }
 
