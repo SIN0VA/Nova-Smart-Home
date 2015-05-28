@@ -6,5 +6,6 @@ Just to introduce the workings of this project a little bit, there are two progr
 The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.
 # IMPORTANT NOTE ! :
 You can't sell, publish any of the code in here, it's free software under the GPLv3 licence.
-Read the licence before using it. And when you use this project or any code of it, you have to link to this website.
+Read the licence for more information.
+When you use this project or any code of it especially in an academic paper, you have to link to this website.
 A. Benabdallah 2015.
