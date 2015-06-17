@@ -1,7 +1,7 @@
 # Nova Smart Home
 ##Introduction 
-This is my final year proejct which is a design (both software and hardware) for a Home Automation system, where a Raspberry Pi will act as the central board for controling a bunch of Arduino UNO  cards (RF Nodes) ; I made 4 types of these RF nodes .
-  -RF Switches (to switch any electrical appliance, it's implemented here for lights only).
+This is my final year proejct which is a design (both software and hardware) for a Home Automation system, where a Raspberry Pi will act as the central board for controling a bunch of Arduino UNO  cards (RF Nodes) ; I made 4 types of these RF nodes.
+-RF Switches (to switch any electrical appliance, it's implemented here for lights only).
   -PIR Nodes (A bunch of Arduino's coupled with PIR detectors for autolights).
   -A Sensor Node (An Arduino with special Sensor Shield : temperature ,humidty and somke detection ).
   -An HVAC Controller (An Arduino with my HVAC Shield to control the "Conventional HVAC System" of the house).
