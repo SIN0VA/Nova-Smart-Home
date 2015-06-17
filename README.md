@@ -9,7 +9,8 @@ This is a Home Automation project that I did for my final year, it uses a Raspbe
 
 <p align="center">  
 
-[global-diagram-en](https://cloud.githubusercontent.com/assets/12392615/8198000/2fb06950-1498-11e5-875a-83fd387744ab.png)
+[global-diagram-en](https://cloud.githubusercontent.com/assets/12392615/8198000/2fb06950-1498-11e5-875a-83fd387744ab.png)  
+
 </p>
 
 
