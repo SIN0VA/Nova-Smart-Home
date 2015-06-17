@@ -4,7 +4,7 @@ This is a Home Automation project that I did for my final year, it uses a Raspbe
 
   1. [RF Switches](Arduino Sketches and Schematics/Arduino RF Controlled Lightswitch/) (to switch any electrical appliance, it's implemented here for lights only).  
   2. PIR Nodes (A bunch of Arduino's coupled with PIR detectors for autolights).  
-  3. A Sensor Node (An Arduino with special [Sensor Shield](https://github.com/SIN0VA/Nova-Smart-Home/tree/master/Arduino%20Sketches%20and%20Schematics/Arduino%20Sensor%20Node) : temperature, humidty and somke detection ).  
+  3. A Sensor Node (An Arduino with special [Sensor Shield](https://github.com/SIN0VA/Nova-Smart-Home/tree/master/Arduino%20Sketches%20and%20Schematics/Arduino%20Sensor%20Node) : to collect readings on temperature, humidty and somke detection ).  
   4. An HVAC Controller (An Arduino with a special [HVAC Shield](Arduino Sketches and Schematics/Arduino Sensor Node/) to   control a "Conventional HVAC System"). I haven't tested this one, so you should tread carefully.  
 <p align="center">
 ![image-1](https://cloud.githubusercontent.com/assets/12392615/8198000/2fb06950-1498-11e5-875a-83fd387744ab.png)  
@@ -30,13 +30,19 @@ Just to introduce the workings of this project a little bit, there are two progr
 The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.  
 ### Control Daemon Configuration  
 The Nova Control Daemon is small process that controls the different RF nodes using the RF interface (NRF24L01), it waits for requests from the web server (when a user turn on/off/auto the lights from the browser). This is the heart of this system, it's the decision making engine of this Smart Home, I should note that temprature control uses a simple non-tested algorithme so this area might need some improvements. The autolights (based on motiond detection) and manual light control (using web server) work flawlessly. But this app needs a configuration, for now to configure the control daemon you have to check its [configuration file](/ControlDaemon/NovaHomeDaemon.cfg), I commented on every lines so it's pretty straightforward, later I will add the ability to configure the Dameon from a browser.
+### Web Server How-To Install  
+Just install NodeJS and copy the HomeControlServer. (The complete guide is coming...)
+### Nova Home Daemon How-To Install  
+Install the dependencies and compile NovaHomeDaemon. (Wait for the complete tutorial, it's gonna be easy)
 ### HomeRF Protocol 
 I made this protocol to secure and manage the exchange of data and commands between the Raspberry Pi and the RF Nodes, this protocol sits on top of the RF24Network Library. It uses AES-128 for encryption and HMAC-SHA1 for authentication.
 Here is a diagram for the HomeRF paquet and the structure of data encrypted inside of it :  
 <p align="center">
 <img src="https://cloud.githubusercontent.com/assets/12392615/8198164/b3a0e486-149a-11e5-9df7-21f7e487125e.png">  
-</p>
-## IMPORTANT NOTE ! :
+</p>  
+### Hardware Stack  
+(Schematics explanations and design choices,...)
+#### IMPORTANT NOTE ! :
 You can't sell, publish any of the code in here, it's free software under the GPLv3 licence.
 Read the licence for more information.
 When you use this project or any code of it especially in an academic paper, you have to link to this website.
