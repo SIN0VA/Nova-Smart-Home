@@ -15,7 +15,7 @@ Each RF node has its owns sketch, the two types of nodes that send data to the R
 3. HVAC Controller Sketch.  
 4. Sensor Node Sketch.  
 
-If you can't make the Shields, just follow the circuit of evry Shield and use wires (the lights witch you have to make it).
+If you can't make the Shields, just follow the circuit of evry Shield and use wires (the RF Switch you have to make it).
 ### Raspberry Pi
 Just to introduce the workings of this project a little bit, there are two programs ; a Node.JS app  which is an Express Web Server so people can turn off/on lights and things like that, If you're familiar with NodeJS Express check the two main files of the server the [ExpressJS Routes](HomeControlServer/routes/index.js) file and the [ExpressJS App ](HomeControlServer/app.js) file.
 The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.
