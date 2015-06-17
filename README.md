@@ -43,7 +43,7 @@ Here is a diagram for the HomeRF paquet and the structure of data encrypted insi
 ### Hardware Stack  
 (Schematics explanations and design choices,...)
 #### What's working :  
-Thes fucntion are tested and working properly :  
+These functions are tested and working properly :  
 1. Autolights and day saving.  
 2. Geolocation (sets the time to enable/disable the autolights function).  
 3. Manual lights control from any web browser computers, tablets or smarthphones (thanks to responsive design).  
