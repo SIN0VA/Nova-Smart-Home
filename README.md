@@ -52,7 +52,7 @@ These functions are tested and working properly :
 
 #### What's not Working :  
 1. HMAC-SHA1 Authentication (gotta fix it).  
-2. I haven't tested temprature control (the algorithme needs some improvment maybe a PID code).  
+2. I haven't tested temprature and humidity control (the algorithme needs some improvment maybe a PID code).  
 3. Call2Report (call the Smart Home and then it will report back with an SMS), this one is not tested.  
 
 #### IMPORTANT NOTE !
