@@ -11,7 +11,7 @@ This is a Home Automation project that I did for my final year, it uses a Raspbe
 </p>
 
 
-The communication between the Raspberry Pi and the other nodes is achieved using the NRF24L01 RF module, each type of the RF nodes has its own Shield, except the light switch which is a RF light switch based on an Atmega328p MCU and a relay (compatible with Arduino).
+The communication between the Raspberry Pi and the other nodes is achieved using the NRF24L01 RF module, each type of the RF nodes has its own Shield, except the light switch which is a RF light switch (Arduino compatible) based on an Atmega328p MCU and a relay.
 ## Software Stack 
 ### Arduino Sketches
 Each RF node has its owns sketch, the two types of nodes that send data to the Raspberry Pi are the PIR Node and the Sensor Node, the other two (the HVAC controller and the RF light switch) will only recieve commands from the Raspberry Pi.  
