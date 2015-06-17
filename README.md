@@ -7,7 +7,8 @@ This is a Home Automation project that I did for my final year, it uses a Raspbe
   3. A Sensor Node (An Arduino with special [Sensor Shield](https://github.com/SIN0VA/Nova-Smart-Home/tree/master/Arduino%20Sketches%20and%20Schematics/Arduino%20Sensor%20Node) : temperature, humidty and somke detection ).  
   4. An HVAC Controller (An Arduino with a special [HVAC Shield](Arduino Sketches and Schematics/Arduino Sensor Node/) to   control a "Conventional HVAC System"). I haven't tested this one, so you should tread carefully. 
 
-<p align="center">
+<p align="center">  
+
 ![global-diagram-en](https://cloud.githubusercontent.com/assets/12392615/8198000/2fb06950-1498-11e5-875a-83fd387744ab.png)
 </p>
 
