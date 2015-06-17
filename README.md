@@ -28,7 +28,9 @@ If you can't make the Shields, just follow the schematics of every Shield and us
 </p>
 Just to introduce the workings of this project a little bit, there are two programs ; a Node.JS app  which is an Express Web Server so people can turn off/on lights and things like that, If you're familiar with NodeJS Express check the two main files of the server the [ExpressJS Routes](HomeControlServer/routes/index.js) file and the [ExpressJS App ](HomeControlServer/app.js) file.
 The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.  
-## HomeRF Protocol 
+### Control Daeomn Configuration  
+The Nova Control Daemon is small process that controls the different RF nodes using the RF interface (NRF24L01), it waits for requests from the web server (when a user turn on/off/auto the lights from the browser) and performs a kind of automation inside the house like auto-lights and temprature control.
+### HomeRF Protocol 
 I made this protocol to secure and manage the exchange of data and commands between the Raspberry Pi and the RF Nodes, this protocol sits on top of the RF24Network Library. It uses AES-128 for encryption and HMAC-SHA1 for authentication.
 Here is a diagram for the HomeRF paquet and the structure of data encrypted inside of it :  
 <p align="center">
