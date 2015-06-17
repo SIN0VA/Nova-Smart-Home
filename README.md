@@ -43,12 +43,13 @@ Here is a diagram for the HomeRF paquet and the structure of data encrypted insi
 ### Hardware Stack  
 (Schematics explanations and design choices,...)
 #### What's working :  
-Thes fucntion are tested and working properly :
+Thes fucntion are tested and working properly :  
 1. Autolights and day saving.  
 2. Geolocation (sets the time to enable/disable the autolights fucntion).  
 3. Manual lights control from any web browser computers, tablets or smarthphones (thanks to responsive design).  
 4. Secure Encryprion of RF data using the AES-128 Standard.  
 5. SMS Alert in case of fire or smoke detection.  
+
 What's not Working :  
 1. HMAC-SHA1 Authentication (gotta fix it).  
 2. I haven't tested temprature control (the algorithme needs some improvment maybe a PID code).  
