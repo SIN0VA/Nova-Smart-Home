@@ -54,7 +54,8 @@ Thes fucntion are tested and working properly :
 1. HMAC-SHA1 Authentication (gotta fix it).  
 2. I haven't tested temprature control (the algorithme needs some improvment maybe a PID code).  
 3. Call2Report (call the Smart Home and then it will report back with an SMS), this one is not tested.  
-#### IMPORTANT NOTE :
+
+#### IMPORTANT NOTE !
 You can't sell, publish any of the code in here, it's free software under the GPLv3 licence.
 Read the licence for more information.
 When you use this project or any code of it especially in an academic paper, you have to link to this website.
