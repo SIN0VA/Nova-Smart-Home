@@ -5,7 +5,7 @@ This is my final year proejct which is a design (both software and hardware) for
   2. PIR Nodes (A bunch of Arduino's coupled with PIR detectors for autolights).  
   3. A Sensor Node (An Arduino with special [Sensor Shield](https://github.com/SIN0VA/Nova-Smart-Home/tree/master/Arduino%20Sketches%20and%20Schematics/Arduino%20Sensor%20Node) : temperature, humidty and somke detection ).  
   4. An HVAC Controller (An Arduino with a special [HVAC Shield](Arduino Sketches and Schematics/Arduino Sensor Node/) to control a "Conventional HVAC System").  
-  The communication between the Raspberry Pi and the other nodes is achieved using the NRF24L01 RF module, each type of the RF nodes has its own Shield, except the light switch which is a RF light switch based on an Atmega328p MCU and a relay (compatible with Arduino).  
+The communication between the Raspberry Pi and the other nodes is achieved using the NRF24L01 RF module, each type of the RF nodes has its own Shield, except the light switch which is a RF light switch based on an Atmega328p MCU and a relay (compatible with Arduino).
 ## Software Stack 
 ### Arduino Sketches
 ### Raspberry Pi
