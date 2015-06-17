@@ -4,12 +4,12 @@ This is a Home Automation project that I did for my final year, it uses a Raspbe
   1. [RF Switches](Arduino Sketches and Schematics/Arduino RF Controlled Lightswitch/) (to switch any electrical appliance, it's implemented here for lights only).  
   2. PIR Nodes (A bunch of Arduino's coupled with PIR detectors for autolights).  
   3. A Sensor Node (An Arduino with special [Sensor Shield](https://github.com/SIN0VA/Nova-Smart-Home/tree/master/Arduino%20Sketches%20and%20Schematics/Arduino%20Sensor%20Node) : temperature, humidty and somke detection ).  
-  4. An HVAC Controller (An Arduino with a special [HVAC Shield](Arduino Sketches and Schematics/Arduino Sensor Node/) to   control a "Conventional HVAC System").  
+  4. An HVAC Controller (An Arduino with a special [HVAC Shield](Arduino Sketches and Schematics/Arduino Sensor Node/) to   control a "Conventional HVAC System"). I haven't tested this one, so you should tread carefully. 
 
 The communication between the Raspberry Pi and the other nodes is achieved using the NRF24L01 RF module, each type of the RF nodes has its own Shield, except the light switch which is a RF light switch based on an Atmega328p MCU and a relay (compatible with Arduino).
 ## Software Stack 
 ### Arduino Sketches
-Each RF node has its owns skecth, the two types of nodes that sends data to the Raspberry Pi are the PIR Node and the Sensor Node, the other two (the HVAC controller and the RF light switch) will only recieve commands from the Raspberry Pi.
+Each RF node has its owns sketch, the two types of nodes that send data to the Raspberry Pi are the PIR Node and the Sensor Node, the other two (the HVAC controller and the RF light switch) will only recieve commands from the Raspberry Pi.  
 1. RF Switch Sketch.
 2. PIR Node Sketch.
 3. HVAC Controller Sketch.
