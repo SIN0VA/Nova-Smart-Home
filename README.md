@@ -9,7 +9,7 @@ This is a Home Automation project that I did for my final year, it uses a Raspbe
 
 <p align="center">  
 
-[global-diagram-en](https://cloud.githubusercontent.com/assets/12392615/8198000/2fb06950-1498-11e5-875a-83fd387744ab.png)  
+[global-diagram](https://cloud.githubusercontent.com/assets/12392615/8198000/2fb06950-1498-11e5-875a-83fd387744ab.png)  
 
 </p>
 
@@ -28,7 +28,7 @@ Each RF node has its owns sketch, the two types of nodes that send data to the R
 If you can't make the Shields, just follow the schematics of every Shield and use wires (but you have to make the RF Switch to control lights).
 ### Raspberry Pi
 <p align="center">
-![piles-protocolaires-en](https://cloud.githubusercontent.com/assets/12392615/8198001/2fb66ada-1498-11e5-866d-b4a1f80fb30a.png)
+![piles-protocolaires](https://cloud.githubusercontent.com/assets/12392615/8198001/2fb66ada-1498-11e5-866d-b4a1f80fb30a.png)
 </p>
 Just to introduce the workings of this project a little bit, there are two programs ; a Node.JS app  which is an Express Web Server so people can turn off/on lights and things like that, If you're familiar with NodeJS Express check the two main files of the server the [ExpressJS Routes](HomeControlServer/routes/index.js) file and the [ExpressJS App ](HomeControlServer/app.js) file.
 The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.
