@@ -1,6 +1,7 @@
 # Nova Smart Home
 ##Introduction 
 This is a Home Automation project that I did for my final year, it uses a Raspberry Pi that acts as a central board for controling a bunch of Arduino UNO  cards (RF Nodes). For this project I made 4 types of these RF nodes.  
+
   1. [RF Switches](Arduino Sketches and Schematics/Arduino RF Controlled Lightswitch/) (to switch any electrical appliance, it's implemented here for lights only).  
   2. PIR Nodes (A bunch of Arduino's coupled with PIR detectors for autolights).  
   3. A Sensor Node (An Arduino with special [Sensor Shield](https://github.com/SIN0VA/Nova-Smart-Home/tree/master/Arduino%20Sketches%20and%20Schematics/Arduino%20Sensor%20Node) : temperature, humidty and somke detection ).  
@@ -10,6 +11,7 @@ The communication between the Raspberry Pi and the other nodes is achieved using
 ## Software Stack 
 ### Arduino Sketches
 Each RF node has its owns sketch, the two types of nodes that send data to the Raspberry Pi are the PIR Node and the Sensor Node, the other two (the HVAC controller and the RF light switch) will only recieve commands from the Raspberry Pi.  
+
 1. [RF Switch Sketch](Arduino Sketches and Schematics/Arduino RF Controlled Lightswitch/RF LightSwitch/RF LightSwitch.ino).  
 2. [PIR Node Sketch](Arduino Sketches and Schematics/Arduino RF Motion Detection/Motion Detection/Motion Detection.ino).  
 3. HVAC Controller Sketch (haven't made this one).  
