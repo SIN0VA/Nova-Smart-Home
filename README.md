@@ -10,9 +10,9 @@ The communication between the Raspberry Pi and the other nodes is achieved using
 ## Software Stack 
 ### Arduino Sketches
 Each RF node has its owns sketch, the two types of nodes that send data to the Raspberry Pi are the PIR Node and the Sensor Node, the other two (the HVAC controller and the RF light switch) will only recieve commands from the Raspberry Pi.  
-1. RF Switch Sketch.
-2. PIR Node Sketch.
-3. HVAC Controller Sketch.
+1. RF Switch Sketch.  
+2. PIR Node Sketch.  
+3. HVAC Controller Sketch.  
 4. Sensor Node Sketch.  
 If you can't make the Shields, just fllow the circuit of evry Shield and use wires (the lights witch you have to make it).
 ### Raspberry Pi
