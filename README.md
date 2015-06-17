@@ -50,7 +50,7 @@ Thes fucntion are tested and working properly :
 4. Secure Encryprion of RF data using the AES-128 Standard.  
 5. SMS Alert in case of fire or smoke detection.  
 
-What's not Working :  
+#### What's not Working :  
 1. HMAC-SHA1 Authentication (gotta fix it).  
 2. I haven't tested temprature control (the algorithme needs some improvment maybe a PID code).  
 3. Call2Report (call the Smart Home and then it will report back with an SMS), this one is not tested.
