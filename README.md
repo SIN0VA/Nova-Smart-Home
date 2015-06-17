@@ -1,6 +1,6 @@
 # Nova Smart Home
 ##Introduction 
-This is my final year proejct which is a design (both software and hardware) for a Home Automation system, where a Raspberry Pi will act as the central board for controling a bunch of Arduino UNO  cards (RF Nodes) ; I made 4 types of these RF nodes.  
+This is a Home Automation project that I did for my final year, it uses a Raspberry Pi that acts as a central board for controling a bunch of Arduino UNO  cards (RF Nodes). For this project I made 4 types of these RF nodes.  
   1. [RF Switches](Arduino Sketches and Schematics/Arduino RF Controlled Lightswitch/) (to switch any electrical appliance, it's implemented here for lights only).  
   2. PIR Nodes (A bunch of Arduino's coupled with PIR detectors for autolights).  
   3. A Sensor Node (An Arduino with special [Sensor Shield](https://github.com/SIN0VA/Nova-Smart-Home/tree/master/Arduino%20Sketches%20and%20Schematics/Arduino%20Sensor%20Node) : temperature, humidty and somke detection ).  
@@ -9,6 +9,12 @@ This is my final year proejct which is a design (both software and hardware) for
 The communication between the Raspberry Pi and the other nodes is achieved using the NRF24L01 RF module, each type of the RF nodes has its own Shield, except the light switch which is a RF light switch based on an Atmega328p MCU and a relay (compatible with Arduino).
 ## Software Stack 
 ### Arduino Sketches
+Each RF node has its owns skecth, the two types of nodes that sends data to the Raspberry Pi are the PIR Node and the Sensor Node, the other two (the HVAC controller and the RF light switch) will only recieve commands from the Raspberry Pi.
+1. RF Switch Sketch.
+2. PIR Node Sketch.
+3. HVAC Controller Sketch.
+4. Sensor Node Sketch.  
+If you can't make the Shields, just fllow the circuit of evry Shield and use wires (the lights witch you have to make it).
 ### Raspberry Pi
 Just to introduce the workings of this project a little bit, there are two programs ; a Node.JS app  which is an Express Web Server so people can turn off/on lights and things like that, If you're familiar with NodeJS Express check the two main files of the server the [ExpressJS Routes](HomeControlServer/routes/index.js) file and the [ExpressJS App ](HomeControlServer/app.js) file.
 The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.
