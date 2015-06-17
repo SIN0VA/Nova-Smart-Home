@@ -24,7 +24,7 @@ Each RF node has its owns sketch, the two types of nodes that send data to the R
 If you can't make the Shields, just follow the schematics of every Shield and use wires (but you have to make the RF Switch to control lights).
 ### Raspberry Pi  
 <p align="center">
-<img src="https://cloud.githubusercontent.com/assets/12392615/8198001/2fb66ada-1498-11e5-866d-b4a1f80fb30a.png">  
+<img src="https://cloud.githubusercontent.com/assets/12392615/8198416/d4577340-149d-11e5-90c2-8f8dbe72cc0a.png">  
 </p>
 Just to introduce the workings of this project a little bit, there are two programs ; a Node.JS app  which is an Express Web Server so people can turn off/on lights and things like that, If you're familiar with NodeJS Express check the two main files of the server the [ExpressJS Routes](HomeControlServer/routes/index.js) file and the [ExpressJS App ](HomeControlServer/app.js) file. For security reasons, this server uses SSL encryption and asks for a password and a username everytime someone tries to access this server.
 The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.  
