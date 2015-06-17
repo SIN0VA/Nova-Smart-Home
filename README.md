@@ -27,7 +27,13 @@ If you can't make the Shields, just follow the schematics of every Shield and us
 <img src="https://cloud.githubusercontent.com/assets/12392615/8198001/2fb66ada-1498-11e5-866d-b4a1f80fb30a.png">  
 </p>
 Just to introduce the workings of this project a little bit, there are two programs ; a Node.JS app  which is an Express Web Server so people can turn off/on lights and things like that, If you're familiar with NodeJS Express check the two main files of the server the [ExpressJS Routes](HomeControlServer/routes/index.js) file and the [ExpressJS App ](HomeControlServer/app.js) file.
-The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.
+The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.  
+## HomeRF Protocol 
+I made this protocol to secure and manage the exchange of data and commands between the Raspberry Pi and the RF Nodes, this protocol sits on top of the RF24Network Library. It uses AES-128 for encryption and HMAC-SHA1 for authentication.
+Here is a diagram for the HomeRF paquet and the structure of data encrypted inside of it :  
+<p align="center">
+<img src="https://cloud.githubusercontent.com/assets/12392615/8198164/b3a0e486-149a-11e5-9df7-21f7e487125e.png">  
+</p>
 ## IMPORTANT NOTE ! :
 You can't sell, publish any of the code in here, it's free software under the GPLv3 licence.
 Read the licence for more information.
