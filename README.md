@@ -59,4 +59,4 @@ These functions are tested and working properly :
 You can't sell, publish any of the code in here, it's free software under the GPLv3 licence.
 Read the licence for more information.
 When you use this project or any code of it especially in an academic paper, you have to link to this website.
-A. Benabdallah 2015.
+
