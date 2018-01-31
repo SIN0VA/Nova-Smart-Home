@@ -7,7 +7,7 @@ This is a Home Automation project that I did for my final year, it uses a Raspbe
   3. A Sensor Node (An Arduino with special [Sensor Shield](https://github.com/SIN0VA/Nova-Smart-Home/tree/master/Arduino%20Sketches%20and%20Schematics/Arduino%20Sensor%20Node) : to collect readings on temperature, humidty and somke detection ).  
   4. An HVAC Controller (An Arduino with a special [HVAC Shield](Arduino Sketches and Schematics/Arduino Sensor Node/) to   control a "Conventional HVAC System"). I haven't tested this one, so you should tread carefully.  
 <p align="center">
-![image-1](https://cloud.githubusercontent.com/assets/12392615/8198000/2fb06950-1498-11e5-875a-83fd387744ab.png)  
+ <img src="https://cloud.githubusercontent.com/assets/12392615/8198000/2fb06950-1498-11e5-875a-83fd387744ab.png">
 </p>  
 
 The communication between the Raspberry Pi and the other nodes is achieved using the NRF24L01 RF module, each type of the RF nodes has its own Shield, except the light switch which is a RF light switch (Arduino compatible) based on an Atmega328p MCU and a relay.  
@@ -42,20 +42,20 @@ Here is a diagram for the HomeRF paquet and the structure of data encrypted insi
 </p>  
 ### Hardware Stack  
 (Schematics explanations and design choices,...)
-#### What's working :  
+### What's working :  
 These functions are tested and working properly :  
-1. Autolights (motion detection, disabled/enabled at night/day).  
+1. Autolights (motion detection, disabled/enabled at night/day).
 2. Geolocation (sets the time to enable/disable the autolights function).  
 3. Manual lights control from any web browser computers, tablets or smarthphones (thanks to responsive design).  
 4. Secure Encryprion of RF data using the AES-128 Standard.  
 5. SMS Alert in case of fire or smoke detection.  
 
-#### What's not Working :  
+### What's not Working :  
 1. HMAC-SHA1 Authentication (gotta fix it).  
 2. I haven't tested temprature and humidity control (the algorithme needs some improvment maybe a PID code).  
 3. Call2Report (call the Smart Home and then it will report back with an SMS), this one is not tested.  
 
-#### IMPORTANT NOTE !
+### IMPORTANT NOTE !
 You can't sell, publish any of the code in here, it's free software under the GPLv3 licence.
 Read the licence for more information.
 When you use this project or any code of it especially in an academic paper, you have to link to this website.
