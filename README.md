@@ -1,5 +1,5 @@
 # Nova Smart Home
-##Introduction 
+## Introduction 
 This is a Home Automation project that I did for my final year, it uses a Raspberry Pi that acts as a central board for controling a bunch of Arduino UNO  cards (RF Nodes). For this project I made 4 types of these RF nodes.  
 
   1. [RF Switches](Arduino Sketches and Schematics/Arduino RF Controlled Lightswitch/) (to switch any electrical appliance, it's implemented here for lights only).  
