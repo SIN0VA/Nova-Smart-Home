@@ -26,22 +26,29 @@ If you can't make the Shields, just follow the schematics of every Shield and us
 <p align="center">
 <img src="https://cloud.githubusercontent.com/assets/12392615/8198416/d4577340-149d-11e5-90c2-8f8dbe72cc0a.png">  
 </p>
+
 Just to introduce the workings of this project a little bit, there are two programs ; a Node.JS app  which is an Express Web Server so people can turn off/on lights and things like that, If you're familiar with NodeJS Express check the two main files of the server the [ExpressJS Routes](HomeControlServer/routes/index.js) file and the [ExpressJS App ](HomeControlServer/app.js) file. For security reasons, this server uses SSL encryption and asks for a password and a username everytime someone tries to access this server.
-The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.  
+The second app is a [Control Daemon](ControlDaemon/NovaHomeDaemon.cpp) coded with C++, this one controls and handles the requests from NodeJS Web Server (IPC via ZMQ sockets) and other RF nodes (via NRF24L01), it also performs the Home Automation side of things.
+  
 ### Control Daemon Configuration  
 The Nova Control Daemon is small process that controls the different RF nodes using the RF interface (NRF24L01), it waits for requests from the web server (when a user turn on/off/auto the lights from the browser). This is the heart of this system, it's the decision making engine of this Smart Home, I should note that temprature control uses a simple non-tested algorithme so this area might need some improvements. The autolights (based on motiond detection) and manual light control (using web server) work flawlessly. But this app needs a configuration, for now to configure the control daemon you have to check its [configuration file](/ControlDaemon/NovaHomeDaemon.cfg), I commented on every lines so it's pretty straightforward, later I will add the ability to configure the Dameon from a browser.
+
 ### Web Server How-To Install  
 Just install NodeJS and copy the HomeControlServer. (The complete guide is coming...)
+
 ### Nova Home Daemon How-To Install  
 Install the dependencies and compile NovaHomeDaemon. (Wait for the complete tutorial, it's gonna be easy)
+
 ### HomeRF Protocol 
 I made this protocol to secure and manage the exchange of data and commands between the Raspberry Pi and the RF Nodes, this protocol sits on top of the RF24Network Library. It uses AES-128 for encryption and HMAC-SHA1 for authentication.
 Here is a diagram for the HomeRF paquet and the structure of data encrypted inside of it :  
 <p align="center">
 <img src="https://cloud.githubusercontent.com/assets/12392615/8198164/b3a0e486-149a-11e5-9df7-21f7e487125e.png">  
 </p>  
+
 ### Hardware Stack  
 (Schematics explanations and design choices,...)
+
 ### What's working :  
 These functions are tested and working properly :  
 1. Autolights (motion detection, disabled/enabled at night/day).
